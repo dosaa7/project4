@@ -16,7 +16,7 @@ public class MemberDAO {
     ResultSet rs = null;
 
     private final String M_INSERT = "insert into member (userid, password, username, email, blogurl, photo, detail) values (?,sha1(?),?,?,?,?,?)";
-    private final String M_UPDATE = "update member set username=?, email=?, blogurl=?, photo=?, detail=?" + "where sid=?";
+    private final String M_UPDATE = "update member set password=?, username=?, email=?, blogurl=?, photo=?, detail=?" + "where sid=?";
     private final String M_DELETE = "delete from member  where sid=?";
     private final String M_SELECT = "select * from member  where sid=?";
     private final String M_LIST = "select * from member order by regdate desc";
@@ -55,12 +55,13 @@ public class MemberDAO {
         conn = JDBCUtil.getConnection();
         try {
             stmt = conn.prepareStatement(M_UPDATE);
-            stmt.setString(1, vo.getUsername());
-            stmt.setString(2, vo.getEmail());
-            stmt.setString(3, vo.getBlogurl());
-            stmt.setString(4, vo.getPhoto());
-            stmt.setString(5, vo.getDetail());
-            stmt.setInt(6, vo.getSid());
+            stmt.setString(1, vo.getPassword());
+            stmt.setString(2, vo.getUsername());
+            stmt.setString(3, vo.getEmail());
+            stmt.setString(4, vo.getBlogurl());
+            stmt.setString(5, vo.getPhoto());
+            stmt.setString(6, vo.getDetail());
+            stmt.setInt(7, vo.getSid());
             stmt.executeUpdate();
             return 1;
 
