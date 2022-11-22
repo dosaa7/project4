@@ -1,7 +1,7 @@
 package com.example.dao;
 
 import com.example.bean.BoardVO;
-import com.example.util.JDBCUtil;
+import com.member.common.JDBCUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,10 +24,10 @@ public class BoardDAO {
 
 	public int insertBoard(BoardVO vo) {
 		int result = 0;
-		conn = JDBCUtil.getConnection();
+
 		System.out.println("===> JDBC로 insertBoard() 기능 처리");
 		try {
-
+			conn = JDBCUtil.getConnection();
 			stmt = conn.prepareStatement(BOARD_INSERT);
 			stmt.setString(1, vo.getCategory());
 			stmt.setString(2, vo.getTitle());

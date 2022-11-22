@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@page import="com.example.dao.BoardDAO, com.example.bean.BoardVO,java.util.*"%>
+<%@page import="com.member.dao.MemberDAO, com.member.bean.MemberVO,java.util.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>free board</title>
+<title>회원 관리</title>
 <style>
 #list {
   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
@@ -36,36 +36,34 @@
 </script>
 </head>
 <body>
-<h1>자유게시판</h1>
+<h1>회원 리스트</h1>
 <%
-	BoardDAO boardDAO = new BoardDAO();
-	List<BoardVO> list = boardDAO.getBoardList();
+	MemberDAO memberDAO = new MemberDAO();
+	List<MemberVO> list = memberDAO.getList();
 	request.setAttribute("list",list);
 %>
 <table id="list" width="90%">
 <tr>
 	<th>Id</th>
-	<th>Category</th>
-	<th>Title</th>
-	<th>Writer</th>
-	<th>Content</th>
+	<th>Userid</th>
+	<th>Username</th>
+	<th>Email</th>
 	<th>Regdate</th>
 	<th>Edit</th>
 	<th>Delete</th>
 </tr>
 <c:forEach items="${list}" var="u">
 	<tr>
-		<td>${u.getSeq()}</td>
-		<td>${u.getCategory()}</td>
-		<td>${u.getTitle()}</td>
-		<td>${u.getWriter()}</td>
-		<td>${u.getContent()}</td>
+		<td>${u.getSid()}</td>
+		<td>${u.getUserid()}</td>
+		<td>${u.getUsername()}</td>
+		<td>${u.getEmail()}</td>
 		<td>${u.getRegdate()}</td>
-		<td><a href="editform.jsp?id=${u.getSeq()}">Edit</a></td>
-		<td><a href="javascript:delete_ok('${u.getSeq()}')">Delete</a></td>
+		<td><a href="editform.jsp?id=${u.getSid()}">Edit</a></td>
+		<td><a href="javascript:delete_ok('${u.getSid()}')">Delete</a></td>
 	</tr>
 </c:forEach>
 </table>
-<br/><a href="addpostform.jsp">Add New Post</a>
+<br/><a href="addpostform.jsp">회원 정보 추가</a>
 </body>
 </html>

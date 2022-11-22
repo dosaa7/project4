@@ -4,8 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>실전프로젝트 자유게시판</title>
-<link rel="stylesheet" href="board.css">
+<title>회원 리스트</title>
 </head>
 <body>
 

@@ -1,7 +1,7 @@
-package com.example.util;
+package com.member.common;
 
-import com.example.bean.BoardVO;
-import com.example.dao.BoardDAO;
+import com.member.bean.MemberVO;
+import com.member.dao.MemberDAO;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
@@ -10,7 +10,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class FileUpload {
-    public BoardVO uploadPhoto(HttpServletRequest request){
+    public MemberVO uploadPhoto(HttpServletRequest request){
         String filename = "";
         int sizeLimit = 15*1024*1024;
 
@@ -19,24 +19,26 @@ public class FileUpload {
         File dir = new File(realPath);
         if(!dir.exists()) dir.mkdirs();
 
-        BoardVO one = null;
+        MemberVO one = null;
         MultipartRequest multipartRequest = null;
         try{
             multipartRequest = new MultipartRequest(request, realPath, sizeLimit, "utf-8", new DefaultFileRenamePolicy());
 
             filename = multipartRequest.getFilesystemName("photo");
 
-            one = new BoardVO();
-            String seq = multipartRequest.getParameter("seq");
-            if(seq!=null&&!seq.equals("")) one.setSeq(Integer.parseInt(seq));
-            one.setCategory(multipartRequest.getParameter("category"));
-            one.setContent(multipartRequest.getParameter("content"));
-            one.setWriter(multipartRequest.getParameter("writer"));
-            one.setTitle(multipartRequest.getParameter("title"));
+            one = new MemberVO();
+            String sid = multipartRequest.getParameter("sid");
+            if(sid!=null&&!sid.equals("")) one.setSid(Integer.parseInt(sid));
+            one.setUserid(multipartRequest.getParameter("userid"));
+            one.setPassword(multipartRequest.getParameter("password"));
+            one.setUsername(multipartRequest.getParameter("username"));
+            one.setEmail(multipartRequest.getParameter("email"));
+            one.setBlogurl(multipartRequest.getParameter("blogurl"));
+            one.setDetail(multipartRequest.getParameter("detail"));
 
-            if(seq!=null&&!seq.equals("")) {
-                BoardDAO dao = new BoardDAO();
-                String oldfilename = dao.getPhotoFilename(Integer.parseInt(seq));
+            if(sid!=null&&!sid.equals("")) {
+                MemberDAO dao = new MemberDAO();
+                String oldfilename = dao.getPhotoFilename(Integer.parseInt(sid));
                 if (filename != null && oldfilename != null)
                     FileUpload.deleteFile(request, oldfilename);
                 else if (filename == null && oldfilename != null)
